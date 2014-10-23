@@ -1,0 +1,40 @@
+Team11questions
+
+MP4
+
+Part A HIVE
+1. Is Hive better suited for OLTP workloads or batch jobs?
+    Hive is not designed for OLTP workloads but rather for batch jobs. This is because Hive does not implement realtime queries or row level updates. It works best with large sets of append-only data.
+    
+2. What are Partitions and Buckets in Hive?
+    The overall purpose of Partitions and Buckets in Hive is to reduce the amount of data scanned. Hive organizes tables into partitions, which is a way of dividing a table by columns, whereas buckets are divided by rows.
+    
+3. Describe how the MetaStore in Hive works.
+    The Hive MetaStore is the location where all metadata for Hive Tables and partitions are stored. It is an abstraction that supports many commercial relational databases and open source datastores. There are three main types of MetaStores: Embedded, Local, Remote. Embedded is primarily used for Unit Tests. In local, each Hive client open a connection to the datastore and performs SQL queries. In remote, the only difference is that Hive Clients connect to a Hive server instead of directly to the datastore.
+    
+4. What is the idea behind Map Join optimization in Hive?
+    The main idea of Map Join is to store the table data in Mapper (in memory) and do the join work in the Map stage, which overall saves the Reduce stage. 
+    
+    
+    
+Part B HBase	
+1. How are rows sorted in HBase?
+	Rows are stored in HBase in byte-lexicographical order. They are sorted by comparing the keys' byte arrays.
+
+2. When do column families need to be declared?
+	Column families need to be declared before creating the table.
+
+3. Describe how HBase handles deletes?
+	Nothing is actually deleted, the cells are just marked making them appear invisible. There are three types of markers, version delete, column delete, and family delete.
+
+4. Should timestamps be used for row keys in HBase? Why or why not?
+	No. If the key is just a timestamp, the region with the bigggest keys will always get new requests.
+
+5. HBase is a NOSQL database which means it does not operate like an RDBMS. When would a person want to use HBase instead of a traditional RDMBS?
+	HBase can support huge numbers of rows (petabytes of data) better than tradistional RDMBS. If you need to do large distributed scans of data, HBase is a much better option. If the data is less structured and not easy to partition, HBase is more feasable than the structured requirements of traditional RDMBS.
+
+6. How does the HBase client HTable find RegionServers?
+	The master node invokes the AssignmentManager when it starts, which will assign and keep track of regions.
+
+7. What happens during a minor compaction?
+	A minor compaction will usually pick up a few smaller, adjacent StoreFiles and will compact (by rewriting) them into one.
